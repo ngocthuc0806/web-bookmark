@@ -69,3 +69,7 @@
 4. Khởi chạy máy chủ PHP bằng một trong hai cách:
    * **Cách 1 (PHP Built-in Server):** Mở Terminal tại thư mục `web-bookmark`, chạy lệnh `php -S localhost:8000` và truy cập `http://localhost:8000`.
    * **Cách 2 (XAMPP):** Đặt thư mục dự án vào `C:\xampp\htdocs\web-bookmark`, bật Apache và truy cập `http://localhost/web-bookmark`.
+
+### Tài khoản trải nghiệm
+* **Quản trị viên (Admin):** Truy cập đường dẫn `/admin/admin.php` (Tên đăng nhập: `admin` | Mật khẩu: `123`).
+* **Khách hàng (User):** Tự tạo tài khoản trực tiếp qua mục **Đăng ký** trên giao diện trang chủ.
