@@ -1,0 +1,34 @@
+[
+    {
+        "madon": "DH6167",
+        "created_at": "18\/11\/2026 14:46",
+        "hoten": "Ngọc Thức",
+        "dienthoai": "0787967999",
+        "email": "ngthingocthuc@gmail.com",
+        "diachi": "phường Tân An, Ninh Kiều, Cần Thơ",
+        "ghichu": "",
+        "pttt": "COD",
+        "items": [
+            {
+                "name": "Không Gia Đình",
+                "price": 88000,
+                "image": "KHONGGIADINH.webp",
+                "qty": 1
+            },
+            {
+                "name": "Harry Potter",
+                "price": 120000,
+                "image": "HARRYPOTTER.jpg",
+                "qty": 1
+            },
+            {
+                "name": "Nghĩ Giàu Làm Giàu",
+                "price": 110000,
+                "image": "NGHIGIAULAMGIAU.webp",
+                "qty": 1
+            }
+        ],
+        "total": 348000,
+        "status": "Đang xử lý"
+    }
+]

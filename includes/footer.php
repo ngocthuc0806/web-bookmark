@@ -1113,11 +1113,11 @@ if (!isset($base_url)) {
             logoutLink.addEventListener("click", function (event) {
                 event.preventDefault();
                 fetch(`${window.BM_BASE_URL}/pages/logout_cart.php`)
-                    .then(() => {
+                    .catch(err => console.error("Lỗi xóa giỏ hàng:", err))
+                    .finally(() => {
                         setLoggedOut();
-                        window.location.reload();
-                    })
-                    .catch(err => console.error("Lỗi xóa giỏ hàng:", err));
+                        window.location.href = `${window.BM_BASE_URL}/index.php`;
+                    });
             });
         }
 

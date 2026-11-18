@@ -175,7 +175,7 @@ $current_keyword = isset($_GET['tukhoa']) ? trim($_GET['tukhoa']) : '';
                         <div class="header__search-input-wrap">
                             <input type="text" name="tukhoa" class="header__search-input"
                                 value="<?php echo htmlspecialchars($current_keyword, ENT_QUOTES, 'UTF-8'); ?>"
-                                placeholder="Nhập tên sách hoặc tác giả để tìm kiếm..." autocomplete="off">
+                                placeholder="Tìm tên sách, tác giả, thể loại (vd: sách kinh tế)..." autocomplete="off">
 
                             <div class="header__search-history">
                                 <h3 class="header__search-history-heading">Lịch sử tìm kiếm</h3>

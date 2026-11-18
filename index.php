@@ -394,23 +394,209 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     initLikeButtons();
 
-    // 2. Hàm lọc + sắp xếp + phân trang ngay trên trang chủ
-    function applyFiltersAndRender(updateHistory = false) {
-        const kwLower = (currentSearch || "").trim().toLowerCase();
+    // 2. Bộ máy tìm kiếm tiếng Việt thông minh (hỗ trợ không dấu, sai chính tả, viết liền, thể loại, mô tả)
+    const CATEGORY_ALIASES = {
+        kinhte: "sach kinh te kinh doanh tai chinh dau tu quan tri khoi nghiep tien te thi truong lam giau",
+        kynang: "sach ky nang song phat trien ban than giao tiep tam ly self help tu duy thanh cong",
+        thieunhi: "sach thieu nhi tre em truyen tranh co tich nhi dong hoc sinh",
+        vanhoc: "sach van hoc tieu thuyet truyen ngan tho tan van kinh dien tinh cam"
+    };
+    const SEARCH_STOP_WORDS = new Set([
+        "sach", "cuon", "quyen", "bo", "tap", "truyen", "cua", "ve", "mua", "tim", "cho", "va", "la", "nhung", "cac"
+    ]);
 
-        // Lọc theo danh mục và từ khóa
+    function normalizeVi(str) {
+        return (str || "")
+            .toLowerCase()
+            .replace(/đ/g, "d")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^a-z0-9\s]/g, " ")
+            .replace(/\s+/g, " ")
+            .trim();
+    }
+
+    function damerauLevenshtein(a, b, maxDist) {
+        const lenA = a.length;
+        const lenB = b.length;
+        if (Math.abs(lenA - lenB) > maxDist) return maxDist + 1;
+        if (lenA === 0) return lenB;
+        if (lenB === 0) return lenA;
+
+        const dp = Array.from({ length: lenA + 1 }, () => new Array(lenB + 1).fill(0));
+        for (let i = 0; i <= lenA; i++) dp[i][0] = i;
+        for (let j = 0; j <= lenB; j++) dp[0][j] = j;
+
+        for (let i = 1; i <= lenA; i++) {
+            let rowMin = maxDist + 1;
+            for (let j = 1; j <= lenB; j++) {
+                const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+                let val = Math.min(
+                    dp[i - 1][j] + 1,
+                    dp[i][j - 1] + 1,
+                    dp[i - 1][j - 1] + cost
+                );
+                if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) {
+                    val = Math.min(val, dp[i - 2][j - 2] + cost);
+                }
+                dp[i][j] = val;
+                if (val < rowMin) rowMin = val;
+            }
+            if (rowMin > maxDist) return maxDist + 1;
+        }
+        return dp[lenA][lenB];
+    }
+
+    function scoreTokenAgainstWords(token, words, allowFuzzy, baseWeight) {
+        let best = 0;
+        for (let i = 0; i < words.length; i++) {
+            const w = words[i];
+            if (!w) continue;
+            if (w === token) {
+                return baseWeight * 1.2;
+            }
+            if ((token.length >= 4 && w.includes(token)) || (token.length >= 3 && w.startsWith(token))) {
+                best = Math.max(best, baseWeight * 0.9);
+                continue;
+            }
+            if (allowFuzzy && token.length >= 3) {
+                const maxDist = token.length <= 4 ? 1 : 2;
+                if (token.length === 3 && w.length >= 2 && token[0] !== w[0]) {
+                    continue;
+                }
+                const dist = damerauLevenshtein(token, w, maxDist);
+                if (dist <= maxDist) {
+                    const penalty = dist === 1 ? 0.72 : 0.5;
+                    best = Math.max(best, baseWeight * penalty);
+                }
+            }
+        }
+        return best;
+    }
+
+    // Tiền xử lý dữ liệu tìm kiếm cho toàn bộ sách để lọc cực nhanh
+    const searchIndexMap = new WeakMap();
+    allProductCols.forEach(col => {
+        const card = col.querySelector(".home-product-item");
+        const catCode = col.getAttribute("data-category") || "";
+        const titleNorm = normalizeVi(col.getAttribute("data-title") || (card ? card.getAttribute("data-name") : ""));
+        const authorNorm = normalizeVi(col.getAttribute("data-author-search") || (card ? card.getAttribute("data-author") : ""));
+        const catLabelNorm = normalizeVi(card ? card.getAttribute("data-category-label") : "");
+        const catFullNorm = normalizeVi(catLabelNorm + " " + (CATEGORY_ALIASES[catCode] || ""));
+        const descNorm = normalizeVi(card ? card.getAttribute("data-desc") : "");
+
+        searchIndexMap.set(col, {
+            titleNorm,
+            authorNorm,
+            catFullNorm,
+            descNorm,
+            titleNoSpace: titleNorm.replace(/\s+/g, ""),
+            authorNoSpace: authorNorm.replace(/\s+/g, ""),
+            catNoSpace: catFullNorm.replace(/\s+/g, ""),
+            titleWords: titleNorm ? titleNorm.split(" ") : [],
+            authorWords: authorNorm ? authorNorm.split(" ") : [],
+            catWords: catFullNorm ? catFullNorm.split(" ") : [],
+            descWords: descNorm ? descNorm.split(" ") : []
+        });
+    });
+
+    function getBookSearchScore(col, rawQuery) {
+        const qNorm = normalizeVi(rawQuery);
+        if (!qNorm) return 1;
+
+        const idx = searchIndexMap.get(col);
+        if (!idx) return 0;
+
+        let score = 0;
+
+        // 1. Khớp cụm từ chính xác (không dấu)
+        if (idx.titleNorm.includes(qNorm)) score += 140;
+        if (idx.authorNorm.includes(qNorm)) score += 110;
+        if (idx.catFullNorm.includes(qNorm)) score += 95;
+        if (idx.descNorm.includes(qNorm)) score += 50;
+
+        // 2. Khớp khi gõ viết liền không dấu cách (vd: "sachkinhte", "dacnhantam")
+        const qNoSpace = qNorm.replace(/\s+/g, "");
+        if (qNoSpace.length >= 3) {
+            if (idx.titleNoSpace.includes(qNoSpace)) score += 120;
+            if (idx.authorNoSpace.includes(qNoSpace)) score += 95;
+            if (idx.catNoSpace.includes(qNoSpace)) score += 80;
+        }
+
+        // 3. Khớp từng từ + chịu lỗi chính tả (fuzzy)
+        const allTokens = qNorm.split(" ").filter(Boolean);
+        const meaningfulTokens = allTokens.filter(t => !SEARCH_STOP_WORDS.has(t));
+        const activeTokens = meaningfulTokens.length > 0 ? meaningfulTokens : allTokens;
+
+        let matchedCount = 0;
+        let primaryMatchedCount = 0;
+        let tokenScoreSum = 0;
+
+        for (let i = 0; i < activeTokens.length; i++) {
+            const qt = activeTokens[i];
+            const sTitle = scoreTokenAgainstWords(qt, idx.titleWords, true, 50);
+            const sAuthor = scoreTokenAgainstWords(qt, idx.authorWords, true, 40);
+            const sCat = scoreTokenAgainstWords(qt, idx.catWords, true, 35);
+            const sDesc = scoreTokenAgainstWords(qt, idx.descWords, false, 10);
+            const bestPrimary = Math.max(sTitle, sAuthor, sCat);
+            const bestTokenScore = Math.max(bestPrimary, sDesc);
+
+            if (bestTokenScore > 0) {
+                matchedCount++;
+                if (bestPrimary > 0) primaryMatchedCount++;
+                tokenScoreSum += bestTokenScore;
+            }
+        }
+
+        // Thưởng thêm nếu các từ phụ (như "sách", "truyện") cũng khớp
+        if (meaningfulTokens.length > 0 && allTokens.length > meaningfulTokens.length) {
+            for (let i = 0; i < allTokens.length; i++) {
+                const t = allTokens[i];
+                if (!SEARCH_STOP_WORDS.has(t)) continue;
+                if (idx.titleWords.includes(t) || idx.catWords.includes(t)) {
+                    score += 10;
+                }
+            }
+        }
+
+        const minRequired = activeTokens.length <= 2
+            ? activeTokens.length
+            : Math.ceil(activeTokens.length * 0.65);
+
+        if (matchedCount >= minRequired && matchedCount > 0 && (primaryMatchedCount > 0 || score > 0)) {
+            score += tokenScoreSum + (matchedCount === activeTokens.length && primaryMatchedCount > 0 ? 30 : 0);
+        } else if (score === 0) {
+            return 0;
+        }
+
+        return score >= 40 ? score : 0;
+    }
+
+    function applyFiltersAndRender(updateHistory = false) {
+        const kwTrimmed = (currentSearch || "").trim();
+        const scoreMap = new WeakMap();
+
+        // Lọc theo danh mục và từ khóa thông minh
         let filtered = allProductCols.filter(col => {
             const cat = col.getAttribute("data-category");
-            const title = col.getAttribute("data-title") || "";
-            const author = col.getAttribute("data-author-search") || "";
-
             const matchCat = (currentCategory === "all") || (cat === currentCategory);
-            const matchKw = !kwLower || title.includes(kwLower) || author.includes(kwLower);
-            return matchCat && matchKw;
+            if (!matchCat) return false;
+
+            if (!kwTrimmed) return true;
+            const s = getBookSearchScore(col, kwTrimmed);
+            if (s > 0) {
+                scoreMap.set(col, s);
+                return true;
+            }
+            return false;
         });
 
-        // Sắp xếp (mỗi tiêu chí cho ra danh sách khác nhau hoàn toàn)
+        // Sắp xếp (khi đang tìm kiếm ở chế độ mặc định, ưu tiên độ phù hợp cao nhất lên đầu)
         filtered.sort((a, b) => {
+            if (kwTrimmed && currentSort === "newest") {
+                const diffScore = (scoreMap.get(b) || 0) - (scoreMap.get(a) || 0);
+                if (diffScore !== 0) return diffScore;
+            }
             if (currentSort === "price-asc") {
                 return parseInt(a.getAttribute("data-price")) - parseInt(b.getAttribute("data-price"));
             }
@@ -592,6 +778,16 @@ document.addEventListener("DOMContentLoaded", function () {
             currentPage = 1;
             applyFiltersAndRender(true);
             searchInput.blur();
+        });
+
+        let searchDebounceTimer = null;
+        searchInput.addEventListener("input", function () {
+            clearTimeout(searchDebounceTimer);
+            searchDebounceTimer = setTimeout(() => {
+                currentSearch = searchInput.value.trim();
+                currentPage = 1;
+                applyFiltersAndRender(false);
+            }, 180);
         });
     }
 
