@@ -1,0 +1,362 @@
+[
+    {
+        "id": 1,
+        "title": "Lão Hạc",
+        "author": "Nam Cao",
+        "price": 45000,
+        "description": "Phản ánh số phận người nông dân nghèo.",
+        "image": "LAOHAC.jpg",
+        "category": "vanhoc"
+    },
+    {
+        "id": 2,
+        "title": "Chí Phèo",
+        "author": "Nam Cao",
+        "price": 48000,
+        "description": "Bi kịch tha hóa của người nông dân.",
+        "image": "CHIPHEO.jpg",
+        "category": "vanhoc"
+    },
+    {
+        "id": 3,
+        "title": "Tắt Đèn",
+        "author": "Ngô Tất Tố",
+        "price": 50000,
+        "description": "Phê phán xã hội phong kiến.",
+        "image": "TATDEN.webp",
+        "category": "vanhoc"
+    },
+    {
+        "id": 4,
+        "title": "Số Đỏ",
+        "author": "Vũ Trọng Phụng",
+        "price": 60000,
+        "description": "Tiểu thuyết trào phúng nổi tiếng.",
+        "image": "SODO.jpg",
+        "category": "vanhoc"
+    },
+    {
+        "id": 5,
+        "title": "Dế Mèn Phiêu Lưu Ký",
+        "author": "Tô Hoài",
+        "price": 55000,
+        "description": "Tác phẩm thiếu nhi kinh điển.",
+        "image": "DEMENPLK.jpg",
+        "category": "vanhoc"
+    },
+    {
+        "id": 6,
+        "title": "Nhật Ký Trong Tù",
+        "author": "Hồ Chí Minh",
+        "price": 40000,
+        "description": "Tập thơ viết trong tù.",
+        "image": "NHATKYTRONGTU.jpg",
+        "category": "vanhoc"
+    },
+    {
+        "id": 7,
+        "title": "Vợ Nhặt",
+        "author": "Kim Lân",
+        "price": 42000,
+        "description": "Tác phẩm về nạn đói 1945.",
+        "image": "VONHAT.webp",
+        "category": "vanhoc"
+    },
+    {
+        "id": 8,
+        "title": "Rừng Xà Nu",
+        "author": "Nguyễn Trung Thành",
+        "price": 45000,
+        "description": "Kháng chiến chống Mỹ.",
+        "image": "RUNGXANU.jpg",
+        "category": "vanhoc"
+    },
+    {
+        "id": 9,
+        "title": "Hai Đứa Trẻ",
+        "author": "Thạch Lam",
+        "price": 38000,
+        "description": "Truyện ngắn cảm xúc.",
+        "image": "HAIDUATRE.webp",
+        "category": "vanhoc"
+    },
+    {
+        "id": 10,
+        "title": "Tuổi Thơ Dữ Dội",
+        "author": "Phùng Quán",
+        "price": 65000,
+        "description": "Thiếu niên trong kháng chiến.",
+        "image": "TUOITHODUDOI.webp",
+        "category": "vanhoc"
+    },
+    {
+        "id": 11,
+        "title": "Đắc Nhân Tâm",
+        "author": "Dale Carnegie",
+        "price": 90000,
+        "description": "Nghệ thuật giao tiếp.",
+        "image": "DACNHANTAM.jpg",
+        "category": "kynang"
+    },
+    {
+        "id": 12,
+        "title": "7 Thói Quen Hiệu Quả",
+        "author": "Stephen Covey",
+        "price": 120000,
+        "description": "Phát triển bản thân.",
+        "image": "7THOIQUEN.webp",
+        "category": "kynang"
+    },
+    {
+        "id": 13,
+        "title": "Quẳng Gánh Lo Đi",
+        "author": "Dale Carnegie",
+        "price": 85000,
+        "description": "Sống tích cực.",
+        "image": "QUANGGANHLODI.jpg",
+        "category": "kynang"
+    },
+    {
+        "id": 14,
+        "title": "Tư Duy Nhanh Và Chậm",
+        "author": "Daniel Kahneman",
+        "price": 150000,
+        "description": "Hiểu về tư duy.",
+        "image": "TUDUY.webp",
+        "category": "kynang"
+    },
+    {
+        "id": 15,
+        "title": "Nhà Giả Kim",
+        "author": "Paulo Coelho",
+        "price": 95000,
+        "description": "Theo đuổi ước mơ.",
+        "image": "NHAGIAKIM.jpg",
+        "category": "kynang"
+    },
+    {
+        "id": 16,
+        "title": "Sức Mạnh Tiềm Thức",
+        "author": "Joseph Murphy",
+        "price": 88000,
+        "description": "Khai phá nội lực.",
+        "image": "SUCMANHTIEMTHUC.webp",
+        "category": "kynang"
+    },
+    {
+        "id": 17,
+        "title": "Người Giàu Nhất Babylon",
+        "author": "George Clason",
+        "price": 76000,
+        "description": "Bí quyết tài chính.",
+        "image": "NGUOIGIAUNHATBABYLON.jpg",
+        "category": "kynang"
+    },
+    {
+        "id": 18,
+        "title": "Dám Nghĩ Lớn",
+        "author": "David Schwartz",
+        "price": 99000,
+        "description": "Tư duy thành công.",
+        "image": "DAMNGHILON.webp",
+        "category": "kynang"
+    },
+    {
+        "id": 19,
+        "title": "Atomic Habits",
+        "author": "James Clear",
+        "price": 140000,
+        "description": "Xây dựng thói quen.",
+        "image": "ATOMIC.jpeg",
+        "category": "kynang"
+    },
+    {
+        "id": 20,
+        "title": "Mindset",
+        "author": "Carol Dweck",
+        "price": 110000,
+        "description": "Tư duy phát triển.",
+        "image": "MINDSET.webp",
+        "category": "kynang"
+    },
+    {
+        "id": 21,
+        "title": "Cha Giàu Cha Nghèo",
+        "author": "Robert Kiyosaki",
+        "price": 120000,
+        "description": "Bài học tài chính cá nhân.",
+        "image": "CHAGIAUCHANGHEO.jpg",
+        "category": "kinhte"
+    },
+    {
+        "id": 22,
+        "title": "Nhà Đầu Tư Thông Minh",
+        "author": "Benjamin Graham",
+        "price": 150000,
+        "description": "Nguyên tắc đầu tư giá trị.",
+        "image": "NHADAUTUTHONGMINH.webp",
+        "category": "kinhte"
+    },
+    {
+        "id": 23,
+        "title": "Nghĩ Giàu Làm Giàu",
+        "author": "Napoleon Hill",
+        "price": 110000,
+        "description": "Tư duy làm giàu thành công.",
+        "image": "NGHIGIAULAMGIAU.webp",
+        "category": "kinhte"
+    },
+    {
+        "id": 24,
+        "title": "Dạy Con Làm Giàu",
+        "author": "Robert Kiyosaki",
+        "price": 100000,
+        "description": "Giáo dục tài chính cho con.",
+        "image": "DAYCONLAMGIAU.jpg",
+        "category": "kinhte"
+    },
+    {
+        "id": 25,
+        "title": "Quốc Gia Khởi Nghiệp",
+        "author": "Dan Senor",
+        "price": 130000,
+        "description": "Câu chuyện khởi nghiệp Israel.",
+        "image": "QUOCGIAKHOINGHIEP.png",
+        "category": "kinhte"
+    },
+    {
+        "id": 26,
+        "title": "Từ Tốt Đến Vĩ Đại",
+        "author": "Jim Collins",
+        "price": 145000,
+        "description": "Chiến lược phát triển doanh nghiệp.",
+        "image": "TUTOTDENVIDAI.webp",
+        "category": "kinhte"
+    },
+    {
+        "id": 27,
+        "title": "Trên Đỉnh Phố Wall",
+        "author": "Peter Lynch",
+        "price": 135000,
+        "description": "Kinh nghiệm đầu tư thực tế.",
+        "image": "TRENDINHPHOWALL.webp",
+        "category": "kinhte"
+    },
+    {
+        "id": 28,
+        "title": "Khởi Nghiệp Tinh Gọn",
+        "author": "Eric Ries",
+        "price": 140000,
+        "description": "Phương pháp Lean Startup.",
+        "image": "KHOINGHIEPTINHGON.webp",
+        "category": "kinhte"
+    },
+    {
+        "id": 29,
+        "title": "Người Giàu Có Nhất Thành Babylon",
+        "author": "George Clason",
+        "price": 90000,
+        "description": "Nguyên tắc quản lý tiền.",
+        "image": "NGUOIGIAUNHATBABYLON.jpg",
+        "category": "kinhte"
+    },
+    {
+        "id": 30,
+        "title": "Tỷ Phú Bán Giày",
+        "author": "Tony Hsieh",
+        "price": 125000,
+        "description": "Câu chuyện kinh doanh Zappos.",
+        "image": "TYPHUBANGIAY.webp",
+        "category": "kinhte"
+    },
+    {
+        "id": 31,
+        "title": "Dế Mèn Phiêu Lưu Ký",
+        "author": "Tô Hoài",
+        "price": 75000,
+        "description": "Cuộc phiêu lưu của chú Dế Mèn.",
+        "image": "DEMENPLK.jpg",
+        "category": "thieunhi"
+    },
+    {
+        "id": 32,
+        "title": "Hoàng Tử Bé",
+        "author": "Antoine de Saint-Exupéry",
+        "price": 85000,
+        "description": "Câu chuyện đầy ý nghĩa.",
+        "image": "HOANGTUBE.jpg",
+        "category": "thieunhi"
+    },
+    {
+        "id": 33,
+        "title": "Harry Potter",
+        "author": "J.K. Rowling",
+        "price": 120000,
+        "description": "Phù thủy nhỏ tuổi nổi tiếng.",
+        "image": "HARRYPOTTER.jpg",
+        "category": "thieunhi"
+    },
+    {
+        "id": 34,
+        "title": "Truyện Cổ Grimm",
+        "author": "Anh Em Grimm",
+        "price": 65000,
+        "description": "Những câu chuyện cổ tích nổi tiếng.",
+        "image": "TRUYENCOGRIMM.jpg",
+        "category": "thieunhi"
+    },
+    {
+        "id": 35,
+        "title": "Cô Bé Lọ Lem",
+        "author": "Nhiều Tác Giả",
+        "price": 55000,
+        "description": "Câu chuyện cổ tích quen thuộc.",
+        "image": "COBELOLEM.webp",
+        "category": "thieunhi"
+    },
+    {
+        "id": 36,
+        "title": "Thám Tử Lừng Danh Conan",
+        "author": "Gosho Aoyama",
+        "price": 90000,
+        "description": "Bộ truyện trinh thám hấp dẫn.",
+        "image": "CONAN.jpg",
+        "category": "thieunhi"
+    },
+    {
+        "id": 37,
+        "title": "Những Tấm Lòng Cao Cả",
+        "author": "Edmondo De Amicis",
+        "price": 80000,
+        "description": "Bài học về lòng nhân ái.",
+        "image": "NHUNGTAMLONGCAOCA.jpg",
+        "category": "thieunhi"
+    },
+    {
+        "id": 38,
+        "title": "Kính Vạn Hoa",
+        "author": "Nguyễn Nhật Ánh",
+        "price": 95000,
+        "description": "Tuổi thơ hồn nhiên vui nhộn.",
+        "image": "KINHVANHOA.jpg",
+        "category": "thieunhi"
+    },
+    {
+        "id": 39,
+        "title": "Chú Mèo Máy Doraemon",
+        "author": "Fujiko F. Fujio",
+        "price": 70000,
+        "description": "Những chuyến phiêu lưu kỳ thú.",
+        "image": "DOREMON.webp",
+        "category": "thieunhi"
+    },
+    {
+        "id": 40,
+        "title": "Không Gia Đình",
+        "author": "Hector Malot",
+        "price": 88000,
+        "description": "Hành trình cảm động của Remi.",
+        "image": "KHONGGIADINH.webp",
+        "category": "thieunhi"
+    }
+]

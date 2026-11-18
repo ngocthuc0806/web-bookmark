@@ -1,0 +1,9 @@
+# Bỏ qua file chứa mật khẩu ứng dụng Gmail và dữ liệu tài khoản người dùng
+database/mail_settings.json
+database/users.json
+
+# File hệ thống và IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
